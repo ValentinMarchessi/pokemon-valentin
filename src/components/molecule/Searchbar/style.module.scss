@@ -1,0 +1,14 @@
+@use "../../../sass/colors.scss" as Colors;
+
+#searchbar{
+    border: 1px solid Colors.$gray;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    input{
+        border: none;
+        &:focus{
+            outline: none;
+        }
+    }
+}

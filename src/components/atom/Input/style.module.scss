@@ -1,0 +1,12 @@
+.field {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    input{
+        width: 50%;
+        padding: 5px 8px;
+    }
+    label{
+        width: 20%;
+    }
+}

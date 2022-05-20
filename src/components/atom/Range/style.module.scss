@@ -1,0 +1,38 @@
+@use "../../../sass/colors.scss" as Colors;
+
+#range {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    input[type="range"] {
+        -webkit-appearance: none;
+        height: 5px;
+        background: Colors.$gray;
+        border-radius: 5px;
+        background-image: linear-gradient(Colors.$purple, Colors.$purple);
+        background-size: 70% 100%;
+        background-repeat: no-repeat;
+        &::-webkit-slider-runnable-track {
+            -webkit-appearance: none;
+            box-shadow: none;
+            border: none;
+            background: transparent;
+        }
+
+        &::-webkit-slider-thumb {
+            height: 15px;
+            width: 15px;
+            border-radius: 25px;
+            background: Colors.$purple;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -1px;
+        }
+    }
+    #rangeWrapper{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+}

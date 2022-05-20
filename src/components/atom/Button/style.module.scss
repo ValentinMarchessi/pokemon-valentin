@@ -1,0 +1,23 @@
+@use "../../../sass/colors.scss" as Colors;
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 5px;
+    color: white;
+    font-size: 18px;
+    background-color: Colors.$purple;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+
+    transition: all 200ms ease;
+
+    &:active, &:hover{
+        filter: brightness(1.2);
+    }
+    &:active{
+        transform: scale(.8);
+    }
+}

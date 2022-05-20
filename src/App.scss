@@ -1,0 +1,8 @@
+@use "./sass/colors.scss" as Colors;
+
+.App {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}

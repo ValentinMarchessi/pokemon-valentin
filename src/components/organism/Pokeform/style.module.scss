@@ -1,0 +1,23 @@
+@use "../../../sass/colors.scss" as Colors;
+
+form.pokemon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
+    border: solid 1px Colors.$gray;
+
+    #fields{
+        display: grid;
+        gap: 20px;
+        width: 50%;
+        margin: auto;
+        grid-template-columns: auto auto;
+    }
+
+    #buttons{
+        display: flex;
+        gap: 15px;
+    }
+}
