@@ -4,9 +4,13 @@ import Input from "../../atom/Input";
 import Button from "../../atom/Button";
 import React from "react";
 
-export default function Pokeform(props: React.FormHTMLAttributes<HTMLFormElement>) {
+interface Props extends React.FormHTMLAttributes<HTMLFormElement> {
+    hidden?: boolean;
+}
+
+export default function Pokeform(props: Props) {
   return (
-    <form className={styles.pokemon} {...props}>
+    <form className={!props.hidden ? styles.pokemon : undefined} {...props}>
       <h2>Nuevo Pokemon</h2>
       <div id={styles.fields}>
         <Input name="name" label="Nombre:" />

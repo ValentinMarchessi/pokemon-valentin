@@ -6,12 +6,12 @@ export interface TableHeader {
   style: CSSProperties;
 }
 
-export interface Props {
+export interface Props<T> {
   headers: (TableHeader | string)[];
-  rows: any[][];
+  rows: T[];
 }
 
-export default function Table({ headers, rows }: Props) {
+export default function Table<T extends Record<any, any>>({ headers, rows }: Props<T>) {
   function renderHeaders(): JSX.Element {
     const th_arr: JSX.Element[] = headers.map((h, i) => {
       if (typeof h === "string")
@@ -27,23 +27,23 @@ export default function Table({ headers, rows }: Props) {
       );
     });
 
-    return <tr role="row">{th_arr}</tr>;
+    return <tr role="rowheader">{th_arr}</tr>;
+  }
+
+  function renderCells() {
+    return rows.map((row,i) => {
+      const rowCells = [];
+      for (const i in row) {
+        rowCells.push(<td>{row[i]}</td>);
+      }
+      return <tr role="row" key={i}>{rowCells}</tr>;
+    });
   }
 
   return (
     <table id={styles["pokemon-table"]}>
       <thead>{renderHeaders()}</thead>
-      <tbody>
-        {rows.map((row, i) => (
-          <tr key={i} role="row">
-            {row.map((e, i) => (
-              <td role="cell" key={i}>
-                {e}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
+      <tbody>{renderCells()}</tbody>
     </table>
   );
 }

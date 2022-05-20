@@ -21,3 +21,16 @@ form.pokemon {
         gap: 15px;
     }
 }
+
+form{
+    animation: fade .3s ease 0s 1 normal both;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
