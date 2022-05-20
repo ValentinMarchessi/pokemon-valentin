@@ -6,9 +6,9 @@ interface Props {
 
 export default function Searchbar({name}: Props) {
     return (
-        <div id={style.searchbar}>
+        <div role="searchbox" id={style.searchbar}>
             <span className="material-icons">search</span>
-            <input name={name} type="text" placeholder="Buscar"></input>
+            <input role="search" name={name} type="text" placeholder="Buscar"></input>
         </div>
     );
 }

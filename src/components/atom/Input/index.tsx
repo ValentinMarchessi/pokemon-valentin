@@ -12,7 +12,7 @@ export default function Input({ name, label, ...props }: Props) {
     return (
         <div className={styles.field}>
             <label htmlFor={name}>{label}</label>
-            <input name={name} type="text" placeholder={props.placeholder}></input>
+            <input name={name} type="text" {...props} placeholder={props.placeholder}></input>
         </div>
     );
 }
