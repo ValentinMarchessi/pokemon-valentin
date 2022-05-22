@@ -6,10 +6,8 @@ import { Pokemon } from "../../utils/interfaces/pokemon.interface";
 import { APIRequest } from "../../utils/interfaces/requests.interface";
 import { API_Res } from "../../utils/interfaces/response.interface";
 
-const env = process.env;
-
-const API_URL = env["VITE_API_URL"];
-const AUTHOR_ID = env["VITE_AUTHOR_ID"];
+const API_URL = "https://pokemon-pichincha.herokuapp.com";
+const AUTHOR_ID = 1;
 
 const URLs = {
   GET: () => `${API_URL}/pokemons/?idAuthor=${AUTHOR_ID}`,
