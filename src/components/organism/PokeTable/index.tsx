@@ -1,33 +1,49 @@
-import React, { ButtonHTMLAttributes, MouseEventHandler, ReactEventHandler } from "react";
+import React, { MouseEventHandler } from "react";
+import styles from "./styles.module.scss";
+import { usePokemonAPI } from "../../../utils/hooks/usePokemonAPI";
 import { Pokemon } from "../../../utils/interfaces/pokemon.interface";
 import Button from "../../atom/Button";
 import Table, { TableHeader } from "../../molecule/Table";
+import { AppHandlers } from "../../../utils/interfaces/appHandlers.interface";
 
 interface Props {
-    pokemons: Pokemon[];
+  pokemons: Pokemon[];
+  appHandlers: AppHandlers;
 }
 
-export default function PokemonTable({ pokemons }: Props) {
-    const tableHeaders: (TableHeader | string)[] = [
-      "Nombre",
-      "Imágen",
-      "Ataque",
-      "Defensa",
-      { text: "Acciones", style: { width: "10%" } },
+export default function PokemonTable({ pokemons, appHandlers }: Props) {
+  const PokemonAPI = usePokemonAPI();
+  const tableHeaders: (TableHeader | string)[] = [
+    "Nombre",
+    "Imágen",
+    "Ataque",
+    "Defensa",
+    { text: "Acciones", style: { width: "10%" } },
   ];
-  
+
   const handlers = {
-    delete: (p: Pokemon) => (event: React.MouseEvent<HTMLButtonElement>) => {
-      alert(`Deleting ${p.name}`);
-    },
-    edit: (p: Pokemon) => (event: React.MouseEvent<HTMLButtonElement>) => {
-      alert(`Editing ${p.name}`);
+    delete: (p: Pokemon) => async () => await appHandlers.pokemon.delete(p.id),
+    edit: (p: Pokemon) => () => {
+      appHandlers.form.set({
+        hidden: false,
+        req: "PUT",
+        fields: {
+          id: p.id,
+          name: p.name,
+          image: p.image,
+          attack: p.attack,
+          defense: p.defense,
+        },
+      });
     },
   };
 
   function mapPokemonsToTableRows() {
     return pokemons.map((pokemon) => ({
-      ...pokemon,
+      name: pokemon.name,
+      image: <img id={styles.pokemon} src={pokemon.image} alt={pokemon.name} />,
+      attack: pokemon.attack,
+      defese: pokemon.defense,
       actions: (
         <div style={{ display: "flex", gap: 10 }}>
           <Button icon="delete" onClick={handlers.delete(pokemon)} />

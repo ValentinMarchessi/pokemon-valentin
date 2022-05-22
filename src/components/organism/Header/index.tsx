@@ -2,10 +2,9 @@ import styles from "./style.module.scss";
 
 import Button from "../../atom/Button";
 import Searchbar from "../../molecule/Searchbar";
-import React from "react";
 
 interface Props {
-  toggleForm: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  toggleForm: () => void;
 }
 
 export default function Header({ toggleForm }: Props) {
