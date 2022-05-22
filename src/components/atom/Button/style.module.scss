@@ -20,4 +20,10 @@
     &:active{
         transform: scale(.8);
     }
+
+    &[disabled]{
+        pointer-events: fill;
+        cursor: not-allowed;
+        background-color: Colors.$gray;
+    }
 }

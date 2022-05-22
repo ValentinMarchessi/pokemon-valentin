@@ -14,7 +14,7 @@ interface Props extends React.FormHTMLAttributes<HTMLFormElement> {
 }
 
 export default function Pokeform({formProps, appHandlers}: Props) {
-  const { req,fields } = useContext(FormContext);
+  const { req,fields,errors } = useContext(FormContext);
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value, name } = e.currentTarget;
     appHandlers?.form.set((f) => ({
@@ -40,12 +40,22 @@ export default function Pokeform({formProps, appHandlers}: Props) {
     appHandlers?.form.set(formInit)
   }
 
-
   return (
-    <form className={!formProps.hidden ? styles.pokemon : undefined} onReset={handleReset} onSubmit={handleSubmit} {...formProps}>
+    <form
+      className={!formProps.hidden ? styles.pokemon : undefined}
+      onReset={handleReset}
+      onSubmit={handleSubmit}
+      {...formProps}
+    >
       <h2>{heading[req]} Pokemon</h2>
       <div id={styles.fields}>
-        <Input name="name" label="Nombre:" defaultValue={fields.name} onChange={onChange} />
+        <Input
+          name="name"
+          label="Nombre:"
+          defaultValue={fields.name}
+          onChange={onChange}
+          required={!fields.name}
+        />
         <Range
           name="attack"
           label="Ataque:"
@@ -61,6 +71,7 @@ export default function Pokeform({formProps, appHandlers}: Props) {
           defaultValue={fields.image}
           onChange={onChange}
           placeholder="URL"
+          required={!fields.image}
         />
         <Range
           name="defense"
@@ -73,7 +84,13 @@ export default function Pokeform({formProps, appHandlers}: Props) {
         />
       </div>
       <div id={styles.buttons}>
-        <Button icon="save" text="Guardar" name="save" type="submit" />
+        <Button
+          icon="save"
+          text="Guardar"
+          name="save"
+          type="submit"
+          disabled={!(fields.name && fields.image)}
+        />
         <Button icon="cancel" text="Cancelar" name="cancel" type="reset" />
       </div>
     </form>

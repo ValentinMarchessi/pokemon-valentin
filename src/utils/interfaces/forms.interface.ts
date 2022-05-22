@@ -8,4 +8,8 @@ export interface PokeformI {
     attack: number;
     defense: number;
   };
+  errors: {
+    name: string;
+    image: string;
+  }
 }

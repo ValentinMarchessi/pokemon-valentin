@@ -7,12 +7,13 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 export default function Input({ name, label, ...props }: Props) {
-
-
     return (
         <div className={styles.field}>
             <label htmlFor={name}>{label}</label>
-            <input name={name} type="text" {...props} placeholder={props.placeholder}></input>
+            <div id={styles.container}>
+                <input name={name} type="text" {...props} placeholder={props.placeholder}></input>
+                {props.required && <span id={styles.error}>This field is required</span>}
+            </div>
         </div>
     );
 }

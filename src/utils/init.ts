@@ -9,4 +9,8 @@ export const formInit: PokeformI = {
     attack: 0,
     defense: 0,
   },
+  errors: {
+    name: "",
+    image: "",
+  }
 };

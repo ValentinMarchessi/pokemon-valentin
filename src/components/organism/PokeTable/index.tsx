@@ -12,7 +12,6 @@ interface Props {
 }
 
 export default function PokemonTable({ pokemons, appHandlers }: Props) {
-  const PokemonAPI = usePokemonAPI();
   const tableHeaders: (TableHeader | string)[] = [
     "Nombre",
     "Imágen",
@@ -53,5 +52,7 @@ export default function PokemonTable({ pokemons, appHandlers }: Props) {
     }));
   }
 
-  return <Table headers={tableHeaders} rows={mapPokemonsToTableRows()} />;
+  const fallback = appHandlers.search.get() ? "No search results" : "Loading...";
+
+  return pokemons.length ? <Table headers={tableHeaders} rows={mapPokemonsToTableRows()} /> : <h2>{fallback}</h2>;
 }

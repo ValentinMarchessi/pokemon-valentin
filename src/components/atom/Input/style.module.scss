@@ -1,11 +1,28 @@
+@use "../../../sass/colors.scss" as Colors;
+
 .field {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    input{
-        padding: 10px 10px;
-    }
-    label{
-        width: 20%;
-    }
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  input {
+    padding: 10px 10px;
+  }
+  label {
+    width: 20%;
+  }
+  input:required {
+    border: solid red 1px;
+  }
+  #container{
+      position: relative;
+      flex-direction: column;
+  }
+  #error{
+      position: absolute;
+      pointer-events: none;
+      font-size: 70%;
+      top: 10%;
+      right: 3%;
+      color: red;
+  }
 }

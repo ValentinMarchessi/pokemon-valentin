@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { ChangeEvent, createContext, FormEvent, useEffect, useState } from "react";
 import "./App.scss";
 import Header from "./components/organism/Header";
 import Pokeform from "./components/organism/Pokeform";
@@ -13,6 +13,7 @@ export const FormContext = createContext<PokeformI>(formInit);
 function App() {
   const PokemonAPI = usePokemonAPI();
   const [form, setForm] = useState<PokeformI>(formInit);
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     (async () => {
@@ -32,7 +33,18 @@ function App() {
       reset:
         (hidden = true) =>
         () =>
-          setForm({ ...formInit, hidden }),
+            setForm({ ...formInit, hidden }),
+      validate: (f: HTMLFormElement) => {
+        const e_form = new FormData(f);
+        const name = e_form.get("name");
+        const image = e_form.get("image");
+
+        const setError = (field: keyof PokeformI["errors"], error: string) =>
+          setForm((f) => ({ ...f, errors: { ...f.errors, [field]: error } }));
+
+        if (!name) setError("name", "Name is required.");
+        if (!image) setError("image", "Image is required");
+      }
     },
     pokemon: {
       delete: async (id: number) => {
@@ -40,13 +52,28 @@ function App() {
         await PokemonAPI.GET();
       },
     },
+    search: {
+      get: () => search,
+      onChange: (e: ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.currentTarget;
+        setSearch(value);
+      },
+      onSubmit: (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        const form = new FormData(e.currentTarget);
+        const search = form.get("pokemon");
+        setSearch(search?.toString() || "");
+      }
+    }
   };
+
+  const searchResults = PokemonAPI.data.filter(p => p.name.startsWith(search));
 
   return (
     <div className="App">
       <FormContext.Provider value={form}>
-        <Header toggleForm={handlers.form.reset(false)} />
-        <PokemonTable pokemons={PokemonAPI.data} appHandlers={handlers} />
+        <Header appHandlers={handlers} />
+        <PokemonTable pokemons={searchResults} appHandlers={handlers} />
         <Pokeform formProps={{ hidden: form.hidden }} appHandlers={handlers} />
       </FormContext.Provider>
     </div>

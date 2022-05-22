@@ -28,3 +28,24 @@ tr td:nth-child(2){
     align-items: center;
     justify-content: center;
 }
+
+#navigation {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    gap: 10px;
+
+    button{
+        height: 40px;
+        aspect-ratio: 1 / 1;
+        color: white;
+        border: none;
+        background-color: Colors.$purple;
+        border-radius: 100%;
+    }
+
+    span{
+        font-weight: 500;
+        font-size: x-large;
+    }
+}
