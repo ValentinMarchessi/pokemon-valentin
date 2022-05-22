@@ -1,4 +1,4 @@
-import {Pokemon} from "../src/utils/interfaces/pokemon.interface"
+import { Pokemon } from "../src/utils/interfaces/pokemon.interface";
 
 export const Ivisaur: Pokemon = {
   name: "Ivysaur",
@@ -54,7 +54,18 @@ export const Blastoise: Pokemon = {
 export const Ekans: Pokemon = {
   name: "Ekans",
   image:
-    "https://static.wikia.nocookie.net/pokemon/images/f/fa/023Ekans.png/revision/latest/scale-to-width-down/350?cb=20140328192338",,
+    "https://static.wikia.nocookie.net/pokemon/images/f/fa/023Ekans.png/revision/latest/scale-to-width-down/350?cb=20140328192338",
   attack: 58,
   defense: 79,
 };
+
+export const pokemons: Pokemon[] = [
+  Ivisaur,
+  Pikachu,
+  Charizard,
+  Raichu,
+  Bulbasaur,
+  Ditto,
+  Blastoise,
+  Ekans,
+];

@@ -6,8 +6,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
@@ -20,6 +20,8 @@
     "redux-thunk": "^2.4.1"
   },
   "devDependencies": {
+    "@swc/core": "^1.2.189",
+    "@swc/jest": "^0.2.21",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@types/jest": "^27.5.1",

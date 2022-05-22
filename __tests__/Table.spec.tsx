@@ -1,8 +1,9 @@
 import { render } from "@testing-library/react";
+import { Provider } from "react-redux";
 import Table, { Props } from "../src/components/molecule/Table";
 import PokemonTable from "../src/components/organism/PokeTable";
-
-import { Ivisaur } from "../__mocks__/pokemons";
+import store from "../src/redux/store";
+import { pokemons } from "../__mocks__/pokemons";
 
 describe("<Table/>", () => {
   function renderTable() {
@@ -48,26 +49,38 @@ describe("<Table/>", () => {
 });
 
 describe("Pokemon <Table/>", () => {
+  const Component = (
+    <Provider store={store}>
+      <PokemonTable />
+    </Provider>
+  );
+
+  beforeAll(async () => {
+    //Loads the store with mock data, simulating a GET request from the API.
+    store.dispatch({type: "GET", payload: pokemons})
+  });
+
   function renderTable() {
-    const initial = {
-      pokemons: [Ivisaur],
-    };
-    return render(<PokemonTable pokemons={initial.pokemons} />);
+    return render(Component);
   }
   it("Headers should be ['Nombre','Imágen','Ataque','Defensa','Acciones']", async () => {
     const { findAllByRole } = renderTable();
-    const headers = await (await findAllByRole("columnheader")).map((h) => h.textContent);
+    const headers = (await findAllByRole("columnheader")).map((h) => h.textContent);
     expect(headers).toMatchObject(["Nombre", "Imágen", "Ataque", "Defensa", "Acciones"]);
   });
   describe("Static Prototype", () => {
     it("Contains Ivysaur", async () => {
       const { findAllByRole } = renderTable();
-      const rows = await findAllByRole("row");
-      rows.some((row) => expect(row).toHaveTextContent("Ivysaur"));
+      const row_ivisaur = (await findAllByRole("row")).find((row) =>
+        row.textContent?.includes("Ivysaur")
+      );
+      expect(row_ivisaur).toBeDefined();
     });
     it("Ivysaur stats should be ATK:65, DEF: 38", async () => {
       const { findAllByRole } = renderTable();
-      const row_ivisaur = (await findAllByRole("row")).find((row) => row.textContent?.includes("Ivysaur"));
+      const row_ivisaur = (await findAllByRole("row")).find((row) =>
+        row.textContent?.includes("Ivysaur")
+      );
       expect(row_ivisaur).toBeDefined();
       const cells: string[] = [];
       row_ivisaur?.childNodes.forEach((node) => cells.push(node.textContent || ""));

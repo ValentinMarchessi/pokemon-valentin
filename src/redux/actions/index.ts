@@ -1,14 +1,12 @@
 import axios from "axios";
 import { Dispatch } from "redux";
-import { ThunkAction, ThunkActionDispatch, ThunkDispatch } from "redux-thunk";
 import { formInit } from "../../utils/init";
 import { PokeformI } from "../../utils/interfaces/forms.interface";
 import { Pokemon } from "../../utils/interfaces/pokemon.interface";
 import { APIRequest } from "../../utils/interfaces/requests.interface";
 import { API_Res } from "../../utils/interfaces/response.interface";
-import { RootState } from "../reducers";
 
-const env = import.meta.env;
+const env = process.env;
 
 const API_URL = env["VITE_API_URL"];
 const AUTHOR_ID = env["VITE_AUTHOR_ID"];
