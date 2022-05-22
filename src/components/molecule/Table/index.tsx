@@ -71,15 +71,15 @@ export default function Table<T extends Record<any, any>>({
     return (
       <div id={styles.navigation}>
         {page > 0 && (
-          <button onClick={pageHanlders.prev} className="material-icons">
+          <button onClick={pageHanlders.prev} id={styles.prev} className="material-icons">
             arrow_back
           </button>
         )}
-        <span>
+        <span id={styles.index}>
           {page + 1}/{lastPage + 1}
         </span>
         {page !== lastPage && (
-          <button onClick={pageHanlders.next} className="material-icons">
+          <button onClick={pageHanlders.next} id={styles.next} className="material-icons">
             arrow_forward
           </button>
         )}

@@ -30,8 +30,11 @@ tr td:nth-child(2){
 }
 
 #navigation {
-    display: flex;
+    display: grid;
+    grid-template-columns: 50px 100px 50px;
     align-items: center;
+    justify-items: center;
+    justify-content: center;
     margin: auto;
     gap: 10px;
 
@@ -43,8 +46,16 @@ tr td:nth-child(2){
         background-color: Colors.$purple;
         border-radius: 100%;
     }
+    #prev{
+        grid-column: 1;
+    }
+    #next{
+        grid-column: 3;
+    }
 
-    span{
+    #index{
+        width: fit-content;
+        grid-column: 2;
         font-weight: 500;
         font-size: x-large;
     }

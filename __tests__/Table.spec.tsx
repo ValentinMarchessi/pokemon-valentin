@@ -1,7 +1,6 @@
 import { render } from "@testing-library/react";
 import Table, { Props } from "../src/components/molecule/Table";
 import PokemonTable from "../src/components/organism/PokeTable";
-import { Pokemon } from "../src/utils/interfaces/pokemon.interface";
 
 import { Ivisaur } from "../__mocks__/pokemons";
 

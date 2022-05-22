@@ -2,22 +2,23 @@ import styles from "./style.module.scss";
 import Range from "../../atom/Range";
 import Input from "../../atom/Input";
 import Button from "../../atom/Button";
-import React, { FormEvent, useContext } from "react";
-import { AppHandlers } from "../../../utils/interfaces/appHandlers.interface";
-import { FormContext } from "../../../App";
+import React, { FormEvent, useEffect, useState } from "react";
 import { PokeformI } from "../../../utils/interfaces/forms.interface";
-import { formInit } from "../../../utils/init";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/reducers";
+import { PokemonActions } from "../../../redux/actions";
+import { useDispatch } from "react-redux";
 
-interface Props extends React.FormHTMLAttributes<HTMLFormElement> {
-  formProps: React.FormHTMLAttributes<HTMLFormElement>;
-  appHandlers?: AppHandlers;
-}
+export default function Pokeform() {
+  const store = useSelector<RootState,RootState>(s => s)
+  const [form, setForm] = useState<PokeformI>(store.form);
+  const dispatch = useDispatch();
 
-export default function Pokeform({formProps, appHandlers}: Props) {
-  const { req,fields,errors } = useContext(FormContext);
+  useEffect(() => setForm(store.form), [store.form])
+
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value, name } = e.currentTarget;
-    appHandlers?.form.set((f) => ({
+    setForm((f) => ({
       ...f,
       fields: {
         ...f.fields,
@@ -26,40 +27,40 @@ export default function Pokeform({formProps, appHandlers}: Props) {
     }));
   };
 
-  const heading: Record<typeof req, string> = {
+  const heading: Record<typeof form.req, string> = {
     "POST": "Nuevo",
     "PUT": "Editar"
   }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    await appHandlers?.form.submit()
+    await PokemonActions[form.req](form.fields)(dispatch);
   }
 
-  function handleReset() {
-    appHandlers?.form.set(formInit)
+  async function handleReset() {
+    await PokemonActions.RESET_FORM("hidden")(dispatch);
   }
 
   return (
     <form
-      className={!formProps.hidden ? styles.pokemon : undefined}
+      className={!form.hidden ? styles.pokemon : undefined}
       onReset={handleReset}
       onSubmit={handleSubmit}
-      {...formProps}
+      hidden={form.hidden}
     >
-      <h2>{heading[req]} Pokemon</h2>
+      <h2>{heading[form.req]} Pokemon</h2>
       <div id={styles.fields}>
         <Input
           name="name"
           label="Nombre:"
-          defaultValue={fields.name}
+          defaultValue={form.fields.name}
           onChange={onChange}
-          required={!fields.name}
+          required={!form.fields.name}
         />
         <Range
           name="attack"
           label="Ataque:"
-          value={fields.attack}
+          value={form.fields.attack}
           onChange={onChange}
           min={0}
           max={100}
@@ -68,15 +69,15 @@ export default function Pokeform({formProps, appHandlers}: Props) {
         <Input
           name="image"
           label="Imágen:"
-          defaultValue={fields.image}
+          defaultValue={form.fields.image}
           onChange={onChange}
           placeholder="URL"
-          required={!fields.image}
+          required={!form.fields.image}
         />
         <Range
           name="defense"
           label="Defensa:"
-          value={fields.defense}
+          value={form.fields.defense}
           onChange={onChange}
           min={0}
           max={100}
@@ -89,7 +90,7 @@ export default function Pokeform({formProps, appHandlers}: Props) {
           text="Guardar"
           name="save"
           type="submit"
-          disabled={!(fields.name && fields.image)}
+          disabled={!(form.fields.name && form.fields.image)}
         />
         <Button icon="cancel" text="Cancelar" name="cancel" type="reset" />
       </div>

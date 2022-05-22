@@ -1,5 +1,13 @@
+@use "../../../sass/colors.scss" as Colors;
+
 img#pokemon{
     width: 50px;
     align-self: center;
     justify-self: center;
+}
+
+#action{
+    cursor: pointer;
+    background-color: transparent;
+    color: Colors.$purple
 }
